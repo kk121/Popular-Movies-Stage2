@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/spacing_16dp"
+    android:layout_marginRight="@dimen/spacing_16dp"
+    android:background="@color/colorWhite"
+    android:fillViewport="true"
+    android:paddingTop="@dimen/spacing_8dp"
+    tools:context="com.krishna.popularmoviesstage1.ActivityDetail">
+
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_poster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/poster_height"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_poster"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:textSize="@dimen/size_20sp"
+            android:textStyle="bold"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/tv_overview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:textSize="@dimen/size_17sp"
+            tools:text="Overview" />
+
+        <TextView
+            android:id="@+id/release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_overview"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:text="@string/title_release_date"
+            android:textSize="@dimen/size_17sp" />
+
+        <TextView
+            android:id="@+id/tv_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_overview"
+            android:layout_toRightOf="@+id/release_date"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:textSize="@dimen/size_17sp"
+            tools:text="08/10/2016" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_release_date"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:text="@string/title_rating"
+            android:textSize="@dimen/size_17sp" />
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_release_date"
+            android:layout_toRightOf="@id/rating"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:textSize="@dimen/size_17sp"
+            tools:text="5.6" />
+
+        <TextView
+            android:id="@+id/popularity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_rating"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:text="@string/title_popularity"
+            android:textSize="@dimen/size_17sp" />
+
+        <TextView
+            android:id="@+id/tv_popularity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_rating"
+            android:layout_toRightOf="@+id/popularity"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:textSize="@dimen/size_17sp"
+            tools:text="1200" />
+
+        <TextView
+            android:id="@+id/vote_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_popularity"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:text="@string/title_vote_count"
+            android:textSize="@dimen/size_17sp" />
+
+        <TextView
+            android:id="@+id/tv_vote_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_popularity"
+            android:layout_toRightOf="@+id/vote_count"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:textSize="@dimen/size_17sp"
+            tools:text="120" />
+
+    </RelativeLayout>
+</ScrollView>

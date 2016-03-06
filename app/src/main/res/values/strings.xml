@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_detail">Movie Detail</string>
+    <string name="title_vote_count">Vote Count: </string>
+    <string name="title_popularity">Popularity: </string>
+    <string name="title_rating">Rating:</string>
+    <string name="title_release_date">Release Date:</string>
+
+    <!-- Strings related to Settings -->
+    <string-array name="pref_category_title">
+        <item>Popularity</item>
+        <item>Rating</item>
+    </string-array>
+
+    <string-array name="pref_category_values">
+        <item>popularity</item>
+        <item>rating</item>
+    </string-array>
+</resources>
