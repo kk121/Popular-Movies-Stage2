@@ -6,15 +6,18 @@
     <string name="title_popularity">Popularity: </string>
     <string name="title_rating">Rating:</string>
     <string name="title_release_date">Release Date:</string>
+    <string name="txt_empty">Nothing to Show</string>
 
     <!-- Strings related to Settings -->
     <string-array name="pref_category_title">
         <item>Popularity</item>
         <item>Rating</item>
+        <item>Favourite</item>
     </string-array>
 
     <string-array name="pref_category_values">
         <item>popularity</item>
         <item>rating</item>
+        <item>favourite</item>
     </string-array>
 </resources>

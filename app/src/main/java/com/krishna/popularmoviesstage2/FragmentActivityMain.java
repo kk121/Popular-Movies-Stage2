@@ -1,12 +1,10 @@
-package com.krishna.popularmoviesstage1;
+package com.krishna.popularmoviesstage2;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -22,24 +20,21 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class FragmentActivityMain extends Fragment implements AdapterView.OnItemClickListener {
+public class FragmentActivityMain extends Fragment implements AdapterView.OnItemClickListener, FetchMovieTask.AsyncTaskResult {
 
     private static final String TAG = FragmentActivityMain.class.getSimpleName();
+    private static final String BASE_URL = "https://api.themoviedb.org/3";
     private static final String PREF_KEY_SORT_BY = "pref_sort_by";
     private static final String PATH_POPULAR = "/movie/popular";
     private static final String PATH_TOP_RATED = "/movie/top_rated";
@@ -116,14 +111,34 @@ public class FragmentActivityMain extends Fragment implements AdapterView.OnItem
     }
 
     public void updateMovieList() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String sort = preferences.getString(PREF_KEY_SORT_BY, "popularity");
+        if (sort.equals("favourite")) {
+            loadAllFavouriteMovies();
+            return;
+        }
         ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String sort = preferences.getString(PREF_KEY_SORT_BY, "popularity");
-            new FetchMovieTask().execute(sort.equals("popularity") ? PATH_POPULAR : PATH_TOP_RATED);
+            String url = BASE_URL + (sort.equals("popularity") ? PATH_POPULAR : PATH_TOP_RATED);
+            progressBar.setVisibility(View.VISIBLE);
+            new FetchMovieTask(this).execute(url);
         } else
             Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+    }
+
+    private void loadAllFavouriteMovies() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String favMovieList = preferences.getString(FragmentDetailActivity.FAV_MOVIE, "");
+        if (favMovieList.equals("")) return;
+        String movieJsonList[] = favMovieList.split("\\},");
+        movieList = new ArrayList<>();
+        for (String movieJson : movieJsonList) {
+            Log.d(TAG, movieJson + "}");
+            Movie movie = new Gson().fromJson(movieJson + "}", Movie.class);
+            movieList.add(movie);
+        }
+        resetAdapter();
     }
 
 
@@ -144,78 +159,19 @@ public class FragmentActivityMain extends Fragment implements AdapterView.OnItem
             movieClickedListener.onMovieClicked(adapterMovieGrid.getItem(position));
     }
 
-    private class FetchMovieTask extends AsyncTask<String, Void, String> {
-        private static final String BASE_URL = "https://api.themoviedb.org/3";
-        private static final String API_KEY_PARAM = "api_key";
-        //your api key
-        private static final String API_KEY_VALUE = "";
-        private String pathToAppend;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            pathToAppend = params[0];
-            BufferedReader bufferedReader = null;
-            HttpURLConnection urlConnection = null;
-            StringBuffer stringBuffer = null;
-            try {
-                Uri uri = Uri.parse(BASE_URL + pathToAppend).buildUpon()
-                        .appendQueryParameter(API_KEY_PARAM, API_KEY_VALUE)
-                        .build();
-                URL url = new URL(uri.toString());
-                Log.d(TAG, uri.toString());
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-                InputStream inputStream = urlConnection.getInputStream();
-                if (inputStream == null)
-                    return null;
-                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                stringBuffer = new StringBuffer();
-                String line;
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuffer.append(line);
-                }
-
-                if (stringBuffer.length() == 0)
-                    return null;
-                return stringBuffer.toString();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (urlConnection != null)
-                    urlConnection.disconnect();
-                try {
-                    if (bufferedReader != null)
-                        bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            movieList = parseJSONData(s);
-            resetAdapter();
-            progressBar.setVisibility(View.GONE);
-        }
+    @Override
+    public void onTaskResult(String s) {
+        movieList = parseJSONData(s);
+        resetAdapter();
+        progressBar.setVisibility(View.GONE);
     }
 
     private void resetAdapter() {
         adapterMovieGrid.clear();
         adapterMovieGrid.addAll(movieList);
+        gridView.setAdapter(adapterMovieGrid);
         adapterMovieGrid.notifyDataSetChanged();
+        movieClickedListener.updateDetailFragment(adapterMovieGrid.getItem(0));
     }
 
     private ArrayList<Movie> parseJSONData(String s) {
@@ -246,6 +202,7 @@ public class FragmentActivityMain extends Fragment implements AdapterView.OnItem
 
     public interface MovieClickedListener {
         void onMovieClicked(Movie movie);
-    }
 
+        void updateDetailFragment(Movie movie);
+    }
 }

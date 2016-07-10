@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.krishna.popularmoviesstage1">
+    package="com.krishna.popularmoviesstage2">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ActivityMain"
+            android:name="com.krishna.popularmoviesstage2.ActivityMain"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -22,19 +22,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityDetail"
+            android:name="com.krishna.popularmoviesstage2.ActivityDetail"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".ActivityMain"
+            android:parentActivityName="com.krishna.popularmoviesstage2.ActivityMain"
             android:theme="@style/AppTheme">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ActivityMain" />
+                android:value="com.krishna.popularmoviesstage2.ActivityMain" />
         </activity>
         <activity
-            android:name=".ActivityPreference"
-            android:theme="@style/AppTheme" />
+            android:name="com.krishna.popularmoviesstage2.ActivityPreference"
+            android:label="@string/action_settings"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.krishna.popularmoviesstage2.ActivityMain" />
+        </activity>
     </application>
 
 </manifest>

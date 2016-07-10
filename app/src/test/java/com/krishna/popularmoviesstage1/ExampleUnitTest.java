@@ -1,4 +1,4 @@
-package com.krishna.popularmoviesstage1;
+package com.krishna.popularmoviesstage2;
 
 import org.junit.Test;
 

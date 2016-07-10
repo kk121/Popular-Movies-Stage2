@@ -8,7 +8,7 @@
     android:background="@color/colorWhite"
     android:fillViewport="true"
     android:paddingTop="@dimen/spacing_8dp"
-    tools:context="com.krishna.popularmoviesstage1.ActivityDetail">
+    tools:context="com.krishna.popularmoviesstage2.ActivityDetail">
 
     <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_poster"
             android:paddingBottom="@dimen/spacing_10dp"
@@ -32,6 +32,15 @@
             android:textSize="@dimen/size_20sp"
             android:textStyle="bold"
             tools:text="Title" />
+
+        <ImageView
+            android:id="@+id/iv_fav"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/iv_poster"
+            android:padding="@dimen/spacing_8dp"
+            android:src="@drawable/ic_favorite_black_48dp" />
 
         <TextView
             android:id="@+id/tv_overview"
@@ -126,6 +135,52 @@
             android:paddingTop="@dimen/spacing_10dp"
             android:textSize="@dimen/size_17sp"
             tools:text="120" />
+
+        <TextView
+            android:id="@+id/tv_trailer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_vote_count"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:text="Trailers"
+            android:textSize="@dimen/size_17sp" />
+
+        <ListView
+            android:id="@+id/lv_trailer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_trailer" />
+
+        <TextView
+            android:id="@+id/tv_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lv_trailer"
+            android:paddingBottom="@dimen/spacing_10dp"
+            android:paddingTop="@dimen/spacing_10dp"
+            android:text="Reviews"
+            android:textSize="@dimen/size_17sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_review"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/lv_review"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tv_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:gravity="center"
+                android:text="No reviews to show" />
+        </LinearLayout>
 
     </RelativeLayout>
 </ScrollView>
